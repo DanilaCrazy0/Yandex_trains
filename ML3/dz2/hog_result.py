@@ -1,8 +1,5 @@
 import numpy as np
 
-from ML3.dz2.hog import cell_size
-
-
 def compute_sobel_gradients_two_loops(image):
     # Get image dimensions
     height, width = image.shape
