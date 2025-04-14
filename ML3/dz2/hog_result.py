@@ -93,9 +93,9 @@ def compute_hog(image, pixels_per_cell=(cell_size, cell_size), bins=9):
                     direct,
                     bins=9,
                     range=(-180, 180),
-                    density=True,
                     weights=magn
                 )
+                hist /= np.sum(hist)
             else:
                 hist = np.zeros(9)
             histograms[i, j] = hist
