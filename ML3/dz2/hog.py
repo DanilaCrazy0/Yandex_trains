@@ -180,9 +180,9 @@ def compute_hog(image, pixels_per_cell=(cell_size, cell_size), bins=9):
                     direct,
                     bins=9,
                     range=(-180, 180),
-                    density=True,
                     weights=magn
                 )
+                hist /= np.sum(hist)
             else:
                 hist = np.zeros(9)
             histograms[i, j] = hist
@@ -191,20 +191,26 @@ def compute_hog(image, pixels_per_cell=(cell_size, cell_size), bins=9):
 
 # do not change the code in the block below
 # __________start of block__________
-# image = random.choice(train_fmnist_data)[0][0].numpy()
-#
-# hog = compute_hog(image)
-# assert hog.shape == (4, 4, 9), "hog should have shape (4, 4, 9) for the FashionMNIST image with default parameters"
-# print("Everything seems fine!")
-#
-# assert os.path.exists("hog_data.npy") and os.path.exists("image_data.npy"), "hog_data.npy and image_data.npy should be in the same directory as the notebook"
-# with open("hog_data.npy", "rb") as f:
-#     hog_data = np.load(f, allow_pickle=True)
-# with open("image_data.npy", "rb") as f:
-#     image_data = np.load(f, allow_pickle=True)
-# for test_image, test_hog in zip(image_data, hog_data):
-#     hog = compute_hog(test_image)
-#     assert np.allclose(hog, test_hog), "hog should be the same"
+image = random.choice(train_fmnist_data)[0][0].numpy()
+
+hog = compute_hog(image)
+assert hog.shape == (4, 4, 9), "hog should have shape (4, 4, 9) for the FashionMNIST image with default parameters"
+print("Everything seems fine!")
+
+assert os.path.exists("hog_data.npy") and os.path.exists("image_data.npy"), "hog_data.npy and image_data.npy should be in the same directory as the notebook"
+with open("hog_data.npy", "rb") as f:
+    hog_data = np.load(f, allow_pickle=True)
+with open("image_data.npy", "rb") as f:
+    image_data = np.load(f, allow_pickle=True)
+for test_image, test_hog in zip(image_data, hog_data):
+    hog = compute_hog(test_image)
+    for i in range(4):
+        for j in range(4):
+            print(hog[i, j])
+            print(test_hog[i, j])
+            print()
+        print('new')
+    assert np.allclose(hog, test_hog), "hog should be the same"
 
 # __________end of block__________
 
